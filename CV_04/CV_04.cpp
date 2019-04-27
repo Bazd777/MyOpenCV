@@ -35,27 +35,24 @@ int main() {
 	int nc = src.channels();
 	for (int row = 0; row < hight; row++) {
 		for (int col = 0; col < width; col++) {
-			if (nc == 1) {
-				cout << "can not load image111111111111 " << endl;
+			if (nc == 1) {//单通道反差色
 				int gray = gray_src.at<uchar>(row, col);
 				gray_src.at<uchar>(row, col) = 255 - gray;
 			}
-			else if(nc == 3)
+			else if(nc == 3)//三通道反差色
 			{
-				cout << "can not load image 22222222222" << endl;
-				double b = src.at<Vec3d>(row, col)[0];
-				double g = src.at<Vec3d>(row, col)[1];
-				double r = src.at<Vec3d>(row, col)[2];
-				src.at<Vec3d>(row, col)[0] = 255 - b;
-				src.at<Vec3d>(row, col)[1] = 255 - g;
-				src.at<Vec3d>(row, col)[2] = 255 - r;
+				double b = src.at<Vec3b>(row, col)[0];
+				double g = src.at<Vec3b>(row, col)[1];
+				double r = src.at<Vec3b>(row, col)[2];
+				dst.at<Vec3b>(row, col)[0] = 255 - b;
+				dst.at<Vec3b>(row, col)[1] = 255 - g;
+				dst.at<Vec3b>(row, col)[2] = 255 - r;
 			}
 		}
 	}
-
-
+	//bitwise_not(src, dst);
 	namedWindow("3", WINDOW_AUTOSIZE);
-	imshow("3", gray_src);
+	imshow("3", dst);
 	waitKey(0);
 	return 0;
 }
